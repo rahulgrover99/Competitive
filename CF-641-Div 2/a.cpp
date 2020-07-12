@@ -24,29 +24,62 @@ ll power(ll num,ll g,ll mod){
   return power((num*num)%mod,g/2,mod);
 }
 
-int main() {
-    int t;
-    cin >> t;
-    while(t--){
-        ll n, k;
-        cin >> n >> k;
-        int flag = 0;
-        if (n%2 == 0){
-            n += 2*k;
-            cout << n << endl;
-        }
-        else{
-            for (int i = 3; i*i <= n; i++){
-                if (n%i== 0){
-                    n+=i;
-                    flag = 1;
-                    break;
-                }
-            }
-            if (flag == 0) n *= 2;
-            k--;
-            n += 2*k;
-            cout << n << endl;
-        }
-    }
+
+class GridSpiral
+{
+public:
+	long long findcell(int D){
+		if(D%2 == 0){
+			return -1;
+		}
+		if(D <= 7){
+			return 0;
+		}
+		if(D == 9){
+			return 1;
+		}
+		if((D-11)%2 != 0){
+			return 0;
+		}
+		ll n = (D - 11)/2;
+		n++;
+		if(n == 1){
+			return 2;
+		}
+		if(n == 2){
+			return 4;
+		}
+		if(n%2 == 1){
+			ll val = n/2;
+			ll sum = ((val+1)*(val+2))/2;
+			sum -= 1;
+			sum *= 2;
+			sum += 2;
+			return sum;
+		}else{
+			ll val = n/2;
+			ll sum = (val*(val+1))/2;
+			sum -= 1;
+			sum *= 2;
+			sum += 2;
+			sum += (val+1);
+			return sum;
+		}
+	}
+	
+};
+
+int main()
+{
+	sync;
+	ll t;
+	cin >> t;
+	while(t--)
+	{
+		int d;
+		cin >> d;
+		GridSpiral solver;
+		cout << solver.findcell(d)<< endl;
+	}	
+	return 0;
 }

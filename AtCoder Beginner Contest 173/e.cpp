@@ -23,54 +23,62 @@ ll power(ll num,ll g,ll mod){
   if(g%2==1)return (num*power((num*num)%mod,g/2,mod))%mod;
   return power((num*num)%mod,g/2,mod);
 }
- 
-int main() {
-    int n, k;
-    cin >> n >> k;
-    ll a[n];
-    FOR0(i, n) cin >> a[i];
-    sort(a, a+n);
-    ll ans = 1;
-    if (a[n-1]==0 && k%2==1){
-        cout << 0 << endl;
-        return 0;
-    }
-    if (a[n-1] < 0 && k%2==1){
-        for (int i = n - 1; i >= n - k; i--) ans = (ans*a[i] + mod)%mod;
-        cout << ans << endl;
-        return 0;
-    }
-    int i = 0, j = n-1;
-    if (k %2 == 1) { 
-        ans *= a[j];
-        ans += mod;
-        ans %= mod; 
-        j--; 
-        k--; 
-    } 
-    k/=2;
-    for (int itr = 0; itr < k; itr++) { 
-  
-        ll left_product = a[i] * a[i + 1]; 
-        ll right_product = a[j] * a[j - 1]; 
- 
-        if (left_product > right_product) { 
-            left_product += mod;
-            left_product%=mod;
-            ans *= left_product; 
-            i += 2; 
-            ans += mod;
-            ans %= mod;
-        } 
-        else { 
-            right_product += mod;
-            right_product%=mod;
-            ans *= right_product; 
-            j -= 2; 
-            ans += mod;
-            ans %= mod;
-        } 
-    } 
-    cout << ans << endl;
- 
+
+class GridSpiral
+{
+public:
+	long long findcell(int D){
+		if(D%2 == 0){
+			return -1;
+		}
+		if(D <= 7){
+			return 0;
+		}
+		if(D == 9){
+			return 1;
+		}
+		if((D-11)%2 != 0){
+			return 0;
+		}
+		ll n = (D - 11)/2;
+		n++;
+		if(n == 1){
+			return 2;
+		}
+		if(n == 2){
+			return 4;
+		}
+		if(n%2 == 1){
+			ll val = n/2;
+			ll sum = ((val+1)*(val+2))/2;
+			sum -= 1;
+			sum *= 2;
+			sum += 2;
+			return sum;
+		}else{
+			ll val = n/2;
+			ll sum = (val*(val+1))/2;
+			sum -= 1;
+			sum *= 2;
+			sum += 2;
+			sum += (val+1);
+			return sum;
+		}
+	}
+	
+};
+
+int main()
+{
+	sync;
+	ll t;
+	cin >> t;
+	while(t--)
+	{
+		int d;
+		cin >> d;
+		GridSpiral solver;
+		cout << solver.findcell(d)<< endl;
+	}	
+	return 0;
 }
